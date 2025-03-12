@@ -1,4 +1,4 @@
-# CE8-Group4 Application Repo
+# CE8-Group4 Application Repository
 
 1. This repo stores the image code for the container.
 
