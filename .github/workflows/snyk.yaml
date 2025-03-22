@@ -1,0 +1,20 @@
+# buildspec.yaml
+version: 0.2
+
+phases:
+  build:
+    commands:
+      # install the latest Snyk CLI from GitHub Releases
+      - latest_version=$(curl -Is "https://github.com/snyk/cli/releases/latest" | grep "^location" | sed 's#.*tag/##g' | tr -d "\r")
+      - snyk_cli_dl_linux="https://github.com/snyk/cli/releases/download/${latest_version}/snyk-linux"
+      - curl -Lo /usr/local/bin/snyk $snyk_cli_dl_linux
+      - chmod +x /usr/local/bin/snyk
+      
+      # authenticate the Snyk CLI
+      - snyk auth $SNYK_TOKEN
+      
+      # perform a Snyk SCA scan; continue if vulnerabilities are found
+      - snyk test || true
+      
+      # upload a snapshot of the project to Snyk for continuous monitoring
+      - snyk monitor
