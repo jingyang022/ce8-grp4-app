@@ -6,9 +6,20 @@ on:
     - dev
 
 jobs:
-   build:
-     runs-on: ubuntu-latest
 
+  Snyk-Scan:
+     runs-on: ubuntu-latest
+     steps:
+      - uses: actions/checkout@v4
+      - name: Run Snyk to check AWS CI/CD files for issues
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --report --scan=resource-changes --severity-threshold=high
+
+  build:
+     runs-on: ubuntu-latest
      steps:
          - name: Checkout
            uses: actions/checkout@v4
@@ -57,15 +68,4 @@ jobs:
               wait-for-service-stability: true
 
 
-   security:
-     runs-on: ubuntu-latest
-     steps:
-      - uses: actions/checkout@v4
-      - name: Run Snyk to check AWS CI/CD files for issues
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --report
-#         args: --scan=resource-changes
-#         args: --severity-threshold=high
+ 
