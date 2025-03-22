@@ -1,4 +1,12 @@
 # buildspec.yaml
+
+name: Workflow for Snyk Infrastructure as Code
+on: 
+  push:
+    branches:
+    - main
+    - dev
+    
 version: 0.2
 
 phases:
