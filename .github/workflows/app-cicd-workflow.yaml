@@ -3,13 +3,7 @@ on:
   push:
     branches:
     - main
-
-name: Workflow for Snyk Infrastructure as Code
-on: 
-  push:
-    branches: [ main ]
-  # pull_request:
-  #   branches: [ main ]
+    - dev
 
 jobs:
   security:
@@ -24,8 +18,7 @@ jobs:
  #         args: --scan=resource-changes
  #         args: --severity-threshold=high
  #         args: --report
- 
-jobs:
+
   build:
      runs-on: ubuntu-latest
 
