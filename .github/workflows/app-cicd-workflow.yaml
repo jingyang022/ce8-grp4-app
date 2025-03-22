@@ -5,7 +5,7 @@ on:
     - main
     - dev
 
-# jobs:
+jobs:
   # security:
     # runs-on: ubuntu-latest
     # steps:
