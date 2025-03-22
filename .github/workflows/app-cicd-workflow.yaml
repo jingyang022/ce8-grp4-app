@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Snyk to check AWS CI/CD files for issues
+        uses: snyk/actions/aws@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
  #       with:
