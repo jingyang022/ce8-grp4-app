@@ -41,8 +41,8 @@ jobs:
            env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
            with:
-           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
-           args: --severity-threshold=high --all-projects --report
+            image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
+            args: --severity-threshold=high --all-projects --report
 
          - name: Download task definition
            run: |
