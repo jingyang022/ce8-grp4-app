@@ -106,3 +106,14 @@ Security: Keeps sensitive tokens safe and encrypted.
 Automation: Easily integrate Snyk into your CI/CD pipeline with secure access to the token.
 Access Control: Ensures only authorized workflows or users can access the token.
 Using GitHub Secrets is the best practice for securely managing sensitive information like API tokens in GitHub workflows.
+
+  Snyk-Scan:
+     runs-on: ubuntu-latest
+     steps:
+      - uses: actions/checkout@v4
+      - name: Run Snyk to check AWS CI/CD files for issues
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --report --severity-threshold=high
