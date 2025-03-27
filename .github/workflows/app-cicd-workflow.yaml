@@ -35,7 +35,8 @@ jobs:
              ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:latest
             #platforms: linux/amd64
             #provenance: false
-
+            
+         - uses: actions/checkout@v4
          - name: Run Snyk to scan Docker image for vulnerabilities
            uses: snyk/actions/docker@v2
            env:
