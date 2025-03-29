@@ -18,7 +18,7 @@ s3_client = boto3.client("s3", region_name=AWS_REGION)
 
 # Simple HTML form for file upload
 UPLOAD_FORM = """
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -37,22 +37,17 @@ UPLOAD_FORM = """
         justify-content: center;
         align-items: center;
         height: 100vh;
-        background: url("singapore_bg.png") no-repeat center center/cover;
+        background: url("https://ce8-grp4-bucket.s3.ap-southeast-1.amazonaws.com/singapore_bg.png") no-repeat center center/cover;
       }
 
       .container {
-        background: rgba(
-          255,
-          255,
-          255,
-          0.85
-        ); /* Softer blend with background */
+        background: rgba(255, 255, 255, 0.85);
         padding: 40px;
         border-radius: 15px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         text-align: center;
         width: 450px;
-        backdrop-filter: blur(10px); /* Glass effect */
+        backdrop-filter: blur(10px);
       }
 
       h2 {
@@ -161,6 +156,78 @@ UPLOAD_FORM = """
       </div>
       <p id="statusMessage" class="status-message"></p>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const dropArea = document.getElementById("dropArea");
+        const fileInput = document.getElementById("fileInput");
+        const uploadBtn = document.getElementById("uploadBtn");
+        const progressBar = document.getElementById("progressBar");
+        const progressContainer = document.querySelector(".progress-container");
+        const statusMessage = document.getElementById("statusMessage");
+
+        // Open file selector on click
+        dropArea.addEventListener("click", () => fileInput.click());
+
+        // Handle file selection
+        fileInput.addEventListener("change", (event) => {
+          const file = event.target.files[0];
+          if (file) {
+            handleFileUpload(file);
+          }
+        });
+
+        // Drag and Drop functionality
+        dropArea.addEventListener("dragover", (event) => {
+          event.preventDefault();
+          dropArea.classList.add("dragover");
+        });
+
+        dropArea.addEventListener("dragleave", () => {
+          dropArea.classList.remove("dragover");
+        });
+
+        dropArea.addEventListener("drop", (event) => {
+          event.preventDefault();
+          dropArea.classList.remove("dragover");
+
+          const file = event.dataTransfer.files[0];
+          if (file) {
+            fileInput.files = event.dataTransfer.files; // Sync with input
+            handleFileUpload(file);
+          }
+        });
+
+        // Simulated Upload Function
+        function handleFileUpload(file) {
+          if (file.size > 10 * 1024 * 1024) {
+            statusMessage.textContent = "Error: File size exceeds 10MB.";
+            statusMessage.style.color = "red";
+            return;
+          }
+
+          statusMessage.textContent = `Uploading: ${file.name}`;
+          statusMessage.style.color = "#222";
+          progressContainer.style.display = "block";
+          progressBar.style.width = "0%";
+
+          let progress = 0;
+          const interval = setInterval(() => {
+            if (progress >= 100) {
+              clearInterval(interval);
+              statusMessage.textContent = "Upload Complete!";
+              statusMessage.style.color = "green";
+            } else {
+              progress += 10;
+              progressBar.style.width = `${progress}%`;
+            }
+          }, 300);
+        }
+
+        // Upload Button triggers file input click
+        uploadBtn.addEventListener("click", () => fileInput.click());
+      });
+    </script>
   </body>
 </html>
 """
