@@ -18,16 +18,149 @@ s3_client = boto3.client("s3", region_name=AWS_REGION)
 
 # Simple HTML form for file upload
 UPLOAD_FORM = """
-<!DOCTYPE html>
-<html>
+!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application Form Upload Portal</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: url("singapore_bg.png") no-repeat center center/cover;
+      }
+
+      .container {
+        background: rgba(
+          255,
+          255,
+          255,
+          0.85
+        ); /* Softer blend with background */
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 450px;
+        backdrop-filter: blur(10px); /* Glass effect */
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        font-size: 28px;
+        color: #222;
+        font-weight: bold;
+      }
+
+      p.instructions {
+        font-size: 18px;
+        color: #444;
+        margin-bottom: 25px;
+      }
+
+      .drop-area {
+        border: 3px dashed #4caf50;
+        padding: 40px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        cursor: pointer;
+        background: rgba(232, 245, 233, 0.8);
+        color: #4caf50;
+        font-size: 20px;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
+
+      .drop-area:hover,
+      .drop-area.dragover {
+        background-color: rgba(200, 230, 201, 0.9);
+        border-color: #388e3c;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      button {
+        width: 100%;
+        padding: 18px;
+        font-size: 18px;
+        color: white;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      button:hover {
+        background-color: #388e3c;
+        transform: scale(1.05);
+      }
+
+      .progress-container {
+        width: 100%;
+        background: #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        display: none;
+        margin-top: 15px;
+      }
+
+      .progress-bar {
+        height: 15px;
+        width: 0%;
+        background: #4caf50;
+        transition: width 0.4s ease;
+      }
+
+      .status-message {
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #222;
+      }
+
+      @media (max-width: 400px) {
+        .container {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
   <body>
-    <h1>Upload a File to S3</h1>
-    <form method="POST" action="/upload" enctype="multipart/form-data">
-      <label>Select file:</label>
-      <input type="file" name="file" required/>
-      <br/><br/>
-      <button type="submit">Upload</button>
-    </form>
+    <div class="container">
+      <h2>Upload Application Form</h2>
+      <p class="instructions">
+        Please upload your completed application form here. Supported file
+        formats: <strong>.pdf, .docx, .jpg, .png</strong>. Maximum size: 10MB.
+      </p>
+      <div class="drop-area" id="dropArea">
+        📂 Drag & Drop or Click to Upload
+      </div>
+      <input
+        type="file"
+        id="fileInput"
+        name="file"
+        accept=".pdf,.docx,.jpg,.png"
+        required
+      />
+      <button id="uploadBtn">Upload Application</button>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <p id="statusMessage" class="status-message"></p>
+    </div>
   </body>
 </html>
 """
