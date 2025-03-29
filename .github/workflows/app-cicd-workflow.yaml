@@ -1,10 +1,12 @@
-name: Application Repo CICD workflow
+name: Prod Branch Deployment
 on:
   workflow_dispatch
 
 jobs:
-  build:
+  deployment:
      runs-on: ubuntu-latest
+     environment: 
+      name: production
 
      steps:
          - name: Checkout
