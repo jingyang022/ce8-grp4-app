@@ -1,12 +1,14 @@
-name: Dev Branch Deployment
+name: Deploy to Production
+
 on:
-  workflow_dispatch
+  push:
+    branches: ["main"]
 
 jobs:
   deployment:
      runs-on: ubuntu-latest
      environment: 
-      name: dev
+      name: production
 
      steps:
          - name: Checkout

@@ -1,12 +1,12 @@
-name: Prod Branch Deployment
+name: Dev Env manual workflow
 on:
   workflow_dispatch
 
 jobs:
-  deployment:
+  manual-deploy-to-dev:
      runs-on: ubuntu-latest
      environment: 
-      name: production
+      name: dev
 
      steps:
          - name: Checkout
