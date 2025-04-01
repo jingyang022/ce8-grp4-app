@@ -3,7 +3,7 @@
 1. This repo stores the image code for the container.
 
 2. The CICD workflow does the following:
- - build and push the image to AWS ECR.
+ - build and push the image to the AWS ECR.
  - checks the code for vulnerabilities.
  - Update the task definition of the container and deploy a new one.
 
