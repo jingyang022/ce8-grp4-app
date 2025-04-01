@@ -1,15 +1,15 @@
-name: Deploy to Dev
+name: Deploy to choonyee
 on:
   push:
     branches:
       - main
-      - dev
+      - choonyee
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: 
-      name: dev
+      name: choonyee
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
