@@ -7,7 +7,7 @@ jobs:
   SYNK-CodeCheck:
     runs-on: ubuntu-latest
     environment: 
-      name: dev
+      name: choonyee
     steps:
       - uses: actions/checkout@v2
       - name: Run Snyk to scan Docker image for vulnerabilities
