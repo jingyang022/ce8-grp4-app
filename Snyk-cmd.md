@@ -116,4 +116,4 @@ Using GitHub Secrets is the best practice for securely managing sensitive inform
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --report --severity-threshold=high
+          args: --report --severity-threshold=high --scan=resource-changes
