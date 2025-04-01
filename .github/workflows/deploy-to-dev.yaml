@@ -6,13 +6,12 @@ on:
     - dev
 
 jobs:
-  branches: ["dev"]
-
-jobs:
   deploy-to-dev:
-     runs-on: ubuntu-latest
-     environment: 
+    runs-on: ubuntu-latest
+    environment: 
       name: dev
+    branches:
+      - dev
 
   Build Docker image:
      runs-on: ubuntu-latest
