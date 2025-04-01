@@ -42,14 +42,23 @@ jobs:
             #platforms: linux/amd64
             #provenance: false
 
-  Snyk-Scan:
-         - name: Run Snyk to scan Docker image for vulnerabilities
-           uses: snyk/actions/docker@master
-           env:
-            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-           with:
-            image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
-            args: --all-projects --severity-threshold=critical --report
+  snyk-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Run Snyk to scan Docker image for vulnerabilities
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
+          args: --all-projects --severity-threshold=critical --report
 
   Task Definition:
          - name: Download task definition
