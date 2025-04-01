@@ -6,14 +6,15 @@ on:
     - dev
 
 jobs:
-    branches: ["dev"]
+  branches: ["dev"]
 
-    deploy-to-dev:
+jobs:
+  deploy-to-dev:
      runs-on: ubuntu-latest
      environment: 
       name: dev
 
-    Build Docker image:
+  Build Docker image:
      runs-on: ubuntu-latest
      steps:
          - name: Checkout
@@ -42,7 +43,7 @@ jobs:
             #platforms: linux/amd64
             #provenance: false
 
-    Snyk-Scan:
+  Snyk-Scan:
          - name: Run Snyk to scan Docker image for vulnerabilities
            uses: snyk/actions/docker@master
            env:
@@ -51,7 +52,7 @@ jobs:
             image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
             args: --all-projects --severity-threshold=critical --report
 
-    Task Definition:
+  Task Definition:
          - name: Download task definition
            run: |
             aws ecs describe-task-definition --task-definition ${{ vars.TASK_DEF }} --query taskDefinition > task-definition.json
