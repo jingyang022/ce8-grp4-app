@@ -1,14 +1,13 @@
-name: Application Repo CICD workflow
+name: Dev Env manual workflow
 on:
-  push:
-    branches:
-    - main
-    - dev
+  workflow_dispatch
 
 jobs:
-
-  Build Docker image:
+  manual-deploy-to-dev:
      runs-on: ubuntu-latest
+     environment: 
+      name: dev
+
      steps:
          - name: Checkout
            uses: actions/checkout@v4
@@ -35,19 +34,10 @@ jobs:
              ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:latest
             #platforms: linux/amd64
             #provenance: false
-  Snyk-Scan:
-         - name: Run Snyk to scan Docker image for vulnerabilities
-           uses: snyk/actions/docker@master
-           env:
-            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-           with:
-            image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
-            args: --severity-threshold=critical --all-projects --report --scan=resource-changes
-
-  Task Definition:
+          
          - name: Download task definition
            run: |
-            aws ecs describe-task-definition --task-definition ${{ vars.TASK_DEF }} --query taskDefinition > task-definition.json
+              aws ecs describe-task-definition --task-definition ${{ vars.TASK_DEF }} --query taskDefinition > task-definition.json
 
          - name: Fill in the new image ID in the Amazon ECS task definition
            id: task-def
@@ -64,6 +54,3 @@ jobs:
               service: ${{ vars.ECS_SERVICE }}
               cluster: ${{ vars.ECS_CLUSTER }}
               wait-for-service-stability: true
-
-
- 

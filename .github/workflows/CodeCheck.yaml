@@ -1,0 +1,19 @@
+name: SYNK scan
+on: 
+  pull_request:
+     types: [opened]
+
+jobs:
+  SYNK-CodeCheck:
+    runs-on: ubuntu-latest
+    environment: 
+      name: dev
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Snyk to scan Docker image for vulnerabilities
+        uses: snyk/actions/docker@master
+        env:
+           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+         image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
+         args: --severity-threshold=high --all-projects --report
