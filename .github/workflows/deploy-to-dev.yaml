@@ -35,6 +35,7 @@ jobs:
           tags: |
             ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
             ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:latest
+  
   snyk-scan:
     runs-on: ubuntu-latest
     needs: build-and-deploy  # Ensure this job runs after build and deploy
