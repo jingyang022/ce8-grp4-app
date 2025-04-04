@@ -12,6 +12,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+      - name: Install specific npm version (11.2.0)
+        run: sudo npm install -g npm@11.2.0
+
       - name: Install Snyk CLI
         run: sudo npm install -g snyk
 
