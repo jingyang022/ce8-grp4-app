@@ -37,4 +37,4 @@ snyk-scan:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
-          args: --severity-threshold=critical --report
+          args: --all projects --severity-threshold=critical --report
