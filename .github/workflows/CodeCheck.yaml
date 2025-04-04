@@ -13,8 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Snyk CLI
-        #run: npm install -g snyk
-        run: sudo npm install -g snyk
+        run: npm install -g npm@11.2.0
 
 
       - name: Configure AWS credentials
