@@ -23,7 +23,6 @@ jobs:
 
   snyk-scan:
     runs-on: ubuntu-latest
-    needs: build-and-deploy  # Ensure this job runs after build and deploy
     environment: 
       name: dev
     steps:
