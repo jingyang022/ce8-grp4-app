@@ -41,7 +41,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Run Snyk to scan Docker image for vulnerabilities
-        uses: snyk/actions/docker@master
+        uses: snyk/actions/docker@v1
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
