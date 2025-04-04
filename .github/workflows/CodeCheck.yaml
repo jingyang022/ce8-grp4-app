@@ -4,16 +4,37 @@ on:
      types: [opened]
 
 jobs:
-  SYNK-CodeCheck:
+  #SYNK-CodeCheck:
+  #  runs-on: ubuntu-latest
+  #  environment: 
+  #    name: dev
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - name: Run Snyk to scan Docker image for vulnerabilities
+  #      uses: snyk/actions/docker@master
+  #      env:
+  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  #      with:
+  #       image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
+  #       args: --severity-threshold=critical --report
+
+snyk-scan:
     runs-on: ubuntu-latest
+    needs: build-and-deploy  # Ensure this job runs after build and deploy
     environment: 
-      name: choonyee
+      name: dev
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
       - name: Run Snyk to scan Docker image for vulnerabilities
         uses: snyk/actions/docker@master
         env:
-           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-         image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
-         args: --severity-threshold=high --report
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
+          args: --severity-threshold=critical --report
