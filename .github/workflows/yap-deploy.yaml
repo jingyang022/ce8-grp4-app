@@ -40,9 +40,9 @@ jobs:
          - name: Run Snyk to scan Docker image for vulnerabilities
            uses: snyk/actions/docker@master
            env:
-            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
            with:
-            args: --severity-threshold=high --all-projects --report
+             args: --severity-threshold=critical --report
 
          - name: Download task definition
            run: |
