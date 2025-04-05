@@ -13,9 +13,6 @@ logger = logging.getLogger(__name__)
 # Flask app init
 app = Flask(__name__)
 
-# Set file size limit to 10 MB
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # Limit to 10 MB
-
 # AWS S3 setup
 AWS_REGION = os.environ.get("AWS_REGION")
 BUCKET_NAME = os.environ.get("BUCKET_NAME")
