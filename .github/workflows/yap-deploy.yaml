@@ -1,7 +1,7 @@
 name: Build & Push Image to ECR plus SYNK scan
 on:
-  push:
-    branches: ["yap"]
+  # push:
+  #   branches: ["yap"]
 
 jobs:
   deploy-to-dev:
