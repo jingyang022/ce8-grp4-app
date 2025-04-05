@@ -42,6 +42,7 @@ jobs:
            env:
              SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
            with:
+             image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:${{ github.sha }}
              args: --severity-threshold=critical --report
 
          - name: Download task definition
