@@ -38,15 +38,36 @@ UPLOAD_FORM = """
       display: flex;
       justify-content: center;
       align-items: center;
+      margin: 0;
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 15px;
-      width: 400px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 50px;
+      border-radius: 20px;
+      width: 540px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
       text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: scale(1.02);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #1b5e20;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: 25px;
+      color: #2e7d32;
     }
 
     .drop-area {
@@ -71,7 +92,7 @@ UPLOAD_FORM = """
     }
 
     button {
-      padding: 12px;
+      padding: 14px;
       width: 100%;
       font-size: 16px;
       background: #4caf50;
@@ -101,10 +122,10 @@ UPLOAD_FORM = """
     }
 
     .status-message {
-      margin-top: 10px;
+      margin-top: 15px;
       font-weight: bold;
       color: #333;
-      min-height: 20px;
+      min-height: 24px;
     }
 
     @keyframes fadeIn {
@@ -119,6 +140,7 @@ UPLOAD_FORM = """
 </head>
 <body>
   <div class="container">
+    <div class="logo">CE8-Group-4</div>
     <h2>Upload Application Form</h2>
     <div class="drop-area" id="dropArea">📂 Drag & Drop or Click to Upload</div>
     <form id="uploadForm" method="POST" enctype="multipart/form-data">
@@ -144,7 +166,7 @@ UPLOAD_FORM = """
         statusMessage.textContent = message;
         statusMessage.style.color = color;
         statusMessage.classList.remove("fade-in");
-        void statusMessage.offsetWidth; // trigger reflow
+        void statusMessage.offsetWidth;
         statusMessage.classList.add("fade-in");
       }
 
