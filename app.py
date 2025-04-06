@@ -131,7 +131,10 @@ UPLOAD_FORM = """
         const progressContainer = document.querySelector(".progress-container");
         const statusMessage = document.getElementById("statusMessage");
 
-        dropArea.addEventListener("click", () => fileInput.click());
+        dropArea.addEventListener("click", () => {
+          console.log("Drop area clicked");
+          fileInput.click();
+        });
 
         dropArea.addEventListener("dragover", (event) => {
           event.preventDefault();
@@ -152,16 +155,16 @@ UPLOAD_FORM = """
         });
 
         uploadForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+
           const file = fileInput.files[0];
           if (!file) {
-            event.preventDefault();
             statusMessage.textContent = "Please select a file.";
             statusMessage.style.color = "red";
             return;
           }
 
           if (file.size > 10 * 1024 * 1024) {
-            event.preventDefault();
             statusMessage.textContent = "File size exceeds 10MB.";
             statusMessage.style.color = "red";
             return;
@@ -185,18 +188,17 @@ UPLOAD_FORM = """
               statusMessage.innerHTML = xhr.responseText;
               statusMessage.style.color = "green";
             } else {
-              statusMessage.textContent = Upload failed: ${xhr.responseText};
+              statusMessage.textContent = `Upload failed: ${xhr.responseText}`;
               statusMessage.style.color = "red";
             }
           };
 
           progressContainer.style.display = "block";
           progressBar.style.width = "0%";
-          statusMessage.textContent = Uploading: ${file.name};
+          statusMessage.textContent = `Uploading: ${file.name}`;
           statusMessage.style.color = "#222";
-          xhr.send(formData);
 
-          event.preventDefault();
+          xhr.send(formData);
         });
       });
     </script>
