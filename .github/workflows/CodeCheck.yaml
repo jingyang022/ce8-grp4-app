@@ -35,5 +35,3 @@ jobs:
         run: snyk test --docker ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_S3 }}:latest --severity-threshold=critical --report
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-#testing for snyk 71
