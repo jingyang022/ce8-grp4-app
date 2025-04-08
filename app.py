@@ -2,7 +2,7 @@ import os
 import logging
 import boto3
 from flask import Flask, request, render_template_string
-from werkzeug.utils import secure_filename
+#from werkzeug.utils import secure_filename
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s - %(message)s")
